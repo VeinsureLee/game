@@ -10,7 +10,7 @@ module Game_Player_Master (
 
 	reg finish_flag;
 	reg [4:0] totalValueMaster_Reg;
-	always@(posedge new_Game or posedge new_Game)
+	always@(posedge clock or posedge new_Game)
 	begin
 		if(new_Game)
 		begin
@@ -20,26 +20,38 @@ module Game_Player_Master (
 		
 		else if (cardReadyMaster)
 		begin
-		
-			if(totalValueMaster_Reg+cardValue4 >= 20)
+			if(totalValueMaster_Reg>= 20)
 			begin
 			
-				if(totalValueMaster_Reg+cardValue4 > 21)
-				begin
-					if(cardValue4==11)
-					begin
-						totalValueMaster_Reg <= totalValueMaster_Reg +1;
-						if(totalValueMaster_Reg >= 20)
-							finish_flag <= 1;
-					end
-					else
-						finish_flag <= 1;
-				end
-				else
-					finish_flag <= 1;
-				
 			end
 			
+			else if(totalValueMaster_Reg+cardValue4 < 20)
+			begin
+				totalValueMaster_Reg<=totalValueMaster_Reg+cardValue4;
+			end
+			
+			else if(totalValueMaster_Reg+cardValue4 < 22)
+			begin
+				totalValueMaster_Reg<=totalValueMaster_Reg+cardValue4;
+				finish_flag <= 1;
+			end
+			
+			else
+			begin
+				if(cardValue4!=11)
+				begin
+					totalValueMaster_Reg <= totalValueMaster_Reg + cardValue4;
+					finish_flag <= 1;
+				end
+				else
+				begin
+					totalValueMaster_Reg <= totalValueMaster_Reg +1;
+					if(totalValueMaster_Reg >= 20)
+						finish_flag <= 1;
+				end
+			end
+			
+				
 		end
 	end
     

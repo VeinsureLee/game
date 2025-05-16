@@ -8,9 +8,12 @@ module Game_Ctrl (
 	 input finishSlave,
 	 
 	 output cardReadyMaster,
-	 output cardReadySlave
+	 output cardReadySlave,
+	 
+	 output [2:0]num_wire
 );
 	 reg [2:0] num;
+	 assign num_wire = num;
 	 reg cardReadyMaster_Reg;
 	 reg cardReadySlave_Reg;
 	 always @(posedge clock or posedge new_Game) begin
@@ -28,7 +31,7 @@ module Game_Ctrl (
 					cardReadySlave_Reg <= 0;
 			   end
 				
-				if(num[2:1]==2'b00)
+				else if(num[2:1]==2'b00)
 				begin
 					cardReadyMaster_Reg <= 0;
 					cardReadySlave_Reg <= 1;
