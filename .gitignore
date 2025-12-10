@@ -14,3 +14,9 @@ output_files/
 simulation/modelsim/
 
 *.v.bak
+
+.gitignore
+game.qpf
+game.qsf
+game.qws
+game_nativelink_simulation.rpt
